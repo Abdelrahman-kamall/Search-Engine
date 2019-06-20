@@ -4,7 +4,7 @@ import java.util.List;
 
 import eg.edu.alexu.csd.filestructure.btree.IBTreeNode;
 
-public class MyBTreeNode implements IBTreeNode {
+public class MyBTreeNode<K extends Comparable<K>, V> implements IBTreeNode<K, V> {
 
 	@Override
 	public int getNumOfKeys() {
@@ -31,37 +31,37 @@ public class MyBTreeNode implements IBTreeNode {
 	}
 
 	@Override
-	public List getKeys() {
+	public List<K> getKeys() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void setKeys(List keys) {
+	public void setKeys(List<K> keys) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public List getValues() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setValues(List values) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List getChildren() {
+	public List<V> getValues() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void setChildren(List children) {
+	public void setValues(List<V> values) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public List<IBTreeNode<K, V>> getChildren() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setChildren(List<IBTreeNode<K, V>> children) {
 		// TODO Auto-generated method stub
 
 	}

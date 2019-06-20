@@ -3,7 +3,7 @@ package eg.edu.alexu.csd.filestructure.btree.cs23_cs24_cs39;
 import eg.edu.alexu.csd.filestructure.btree.IBTree;
 import eg.edu.alexu.csd.filestructure.btree.IBTreeNode;
 
-public class MyBTree implements IBTree {
+public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 
 	@Override
 	public int getMinimumDegree() {
@@ -12,25 +12,25 @@ public class MyBTree implements IBTree {
 	}
 
 	@Override
-	public IBTreeNode getRoot() {
+	public IBTreeNode<K, V> getRoot() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void insert(Comparable key, Object value) {
+	public void insert(K key, V value) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public Object search(Comparable key) {
+	public V search(K key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean delete(Comparable key) {
+	public boolean delete(K key) {
 		// TODO Auto-generated method stub
 		return false;
 	}
