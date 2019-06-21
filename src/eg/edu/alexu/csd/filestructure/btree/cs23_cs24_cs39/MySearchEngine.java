@@ -12,12 +12,17 @@ import eg.edu.alexu.csd.filestructure.btree.ISearchEngine;
 import eg.edu.alexu.csd.filestructure.btree.ISearchResult;
 
 public class MySearchEngine implements ISearchEngine {
-
 	IBTree<String, ArrayList<ISearchResult>> bT = new MyBTree<String, ArrayList<ISearchResult>>(0);
+	
+	public MySearchEngine(int t) {
+		bT = new MyBTree<String, ArrayList<ISearchResult>>(t);
+	}
+
+	
 
 	@Override
 	public void indexWebPage(String filePath) {
-		domParser(filePath);
+		domParser(filePath,true);
 	}
 
 	@Override
@@ -31,7 +36,7 @@ public class MySearchEngine implements ISearchEngine {
 
 	@Override
 	public void deleteWebPage(String filePath) {
-		// TODO Auto-generated method stub
+		domParser(filePath,false);
 		
 	}
 
@@ -106,7 +111,7 @@ public class MySearchEngine implements ISearchEngine {
 			arr.add(min_ind, sr);
 		}
 	}
-	private void domParser(String filePath) {
+	private void domParser(String filePath , boolean flag) {
 		try {
 			File inputFile = new File(filePath);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -124,7 +129,11 @@ public class MySearchEngine implements ISearchEngine {
 					String[] str = data.split("[\" \"|\n]");
 					for (String s : str) {
 						if (s.compareTo("") != 0) {
+							if(flag) {
 							insertion(s, id);
+							}else {
+								Delete_by_word(s,id);
+							}
 						}
 					}
 				}
@@ -160,6 +169,25 @@ public class MySearchEngine implements ISearchEngine {
 			this.bT.insert(s, aL);
 		}
 
+	}
+	
+	boolean Delete_by_word(String word,String id) {
+		ArrayList<ISearchResult> arr_sr = bT.search(word);
+		for(int counter=0;counter<arr_sr.size();counter++) {
+			if(id.equals(arr_sr.get(counter).getId())) {
+				arr_sr.remove(counter);
+				return true;
+			}
+			if(arr_sr.size() ==0) {
+				return bT.delete(word);
+			}
+			if(counter==arr_sr.size()-1 ) {
+				return false;
+			}
+		}
+		
+		return false;
+		
 	}
 
 }
