@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.io.*;
+
+import javax.management.RuntimeErrorException;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
 
@@ -22,11 +24,17 @@ public class MySearchEngine implements ISearchEngine {
 
 	@Override
 	public void indexWebPage(String filePath) {
+		if(filePath == null || filePath =="") {
+			throw new RuntimeErrorException(null);
+		}
 		domParser(filePath,true);
 	}
 
 	@Override
 	public void indexDirectory(String directoryPath) {
+		if(directoryPath == null || directoryPath =="") {
+			throw new RuntimeErrorException(null);
+		}
 		File folder = new File(directoryPath);
 		File[] listOfFiles = folder.listFiles();
 		for (File file : listOfFiles) {
@@ -90,7 +98,7 @@ public class MySearchEngine implements ISearchEngine {
 		return result;
 	}
 	
-	void turn_into_hash(ArrayList<ISearchResult> arr , HashMap<String,Integer> hash) {
+	private void turn_into_hash(ArrayList<ISearchResult> arr , HashMap<String,Integer> hash) {
 		
 		for(int counter =0; counter <arr.size() ; counter++) {
 			hash.put(arr.get(counter).getId(), arr.get(counter).getRank());
@@ -98,7 +106,7 @@ public class MySearchEngine implements ISearchEngine {
 		
 	}
 	
-	void ordering_basedon_freq(ArrayList<ISearchResult> arr) {
+	private void ordering_basedon_freq(ArrayList<ISearchResult> arr) {
 		
 		for(int counter1 =0 ;counter1 < arr.size() ; counter1++) {
 			int min_freq = arr.get(counter1).getRank();
@@ -176,7 +184,7 @@ public class MySearchEngine implements ISearchEngine {
 
 	}
 	
-	boolean Delete_by_word(String word,String id) {
+	private boolean Delete_by_word(String word,String id) {
 		ArrayList<ISearchResult> arr_sr = bT.search(word);
 		for(int counter=0;counter<arr_sr.size();counter++) {
 			if(id.equals(arr_sr.get(counter).getId())) {

@@ -70,26 +70,6 @@ public class MyBTreeNode<K extends Comparable<K>, V> implements IBTreeNode<K, V>
 
 	}
 	
-	public void setChildAtIndex (IBTreeNode<K,V> child , int index) {
-		this.children.add(index, child);
-	}
-	public IBTreeNode<K,V> getChildAtIndex (int index){
-		IBTreeNode<K,V> child = this.children.get(index);
-		return child; 
-	}
-	public void setKeyAtIndex (K key , int index) {
-		this.keys.add(index, key);
-	}
-	public K getKeyAtIndex (int index){
-		K key = this.keys.get(index);
-		return key; 
-	}
-	public void setValueAtIndex (V value , int index) {
-		this.values.add(index, value);
-	}
-	public V getValueAtIndex (int index){
-		V value = this.values.get(index);
-		return value; 
-	}
+	
 	
 	}
