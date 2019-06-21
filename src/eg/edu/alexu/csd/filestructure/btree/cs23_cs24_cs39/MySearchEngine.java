@@ -30,7 +30,11 @@ public class MySearchEngine implements ISearchEngine {
 		File folder = new File(directoryPath);
 		File[] listOfFiles = folder.listFiles();
 		for (File file : listOfFiles) {
+			if(file.isDirectory()) {
+				indexDirectory(file.getPath());				
+			}else {
 			this.indexWebPage(file.getAbsolutePath());
+			}
 		}
 	}
 
@@ -128,6 +132,7 @@ public class MySearchEngine implements ISearchEngine {
 					String data = eElement.getChildNodes().item(0).getTextContent().toString();
 					String[] str = data.split("[\" \"|\n]");
 					for (String s : str) {
+						s = s.toLowerCase();
 						if (s.compareTo("") != 0) {
 							if(flag) {
 							insertion(s, id);

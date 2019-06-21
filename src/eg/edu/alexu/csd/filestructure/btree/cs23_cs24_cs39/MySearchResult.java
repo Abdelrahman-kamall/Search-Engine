@@ -3,6 +3,14 @@ package eg.edu.alexu.csd.filestructure.btree.cs23_cs24_cs39;
 import eg.edu.alexu.csd.filestructure.btree.ISearchResult;
 
 public class MySearchResult implements ISearchResult {
+	
+	public MySearchResult(String num , int freq) {
+		this.Id = num;
+		this.rank=freq;
+	}
+	
+	public MySearchResult() {
+					}
 	private String Id ;
 	private int rank;
 
