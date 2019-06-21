@@ -3,28 +3,28 @@ package eg.edu.alexu.csd.filestructure.btree.cs23_cs24_cs39;
 import eg.edu.alexu.csd.filestructure.btree.ISearchResult;
 
 public class MySearchResult implements ISearchResult {
+	private String Id ;
+	private int rank;
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.Id;
 	}
 
 	@Override
 	public void setId(String id) {
-		// TODO Auto-generated method stub
+		this.Id = id;
 
 	}
 
 	@Override
 	public int getRank() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.rank;
 	}
 
 	@Override
 	public void setRank(int rank) {
-		// TODO Auto-generated method stub
+		this.rank= rank;
 
 	}
 
