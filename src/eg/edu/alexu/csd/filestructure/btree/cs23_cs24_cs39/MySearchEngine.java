@@ -15,105 +15,126 @@ import eg.edu.alexu.csd.filestructure.btree.ISearchResult;
 
 public class MySearchEngine implements ISearchEngine {
 	IBTree<String, ArrayList<ISearchResult>> bT = new MyBTree<String, ArrayList<ISearchResult>>(0);
-	
+
 	public MySearchEngine(int t) {
 		bT = new MyBTree<String, ArrayList<ISearchResult>>(t);
 	}
 
-	
-
 	@Override
 	public void indexWebPage(String filePath) {
-		if(filePath == null || filePath =="") {
+		if (filePath == null || filePath == "") {
 			throw new RuntimeErrorException(null);
 		}
-		domParser(filePath,true);
+		File file = new File(filePath);
+		if (file.exists()) {
+			domParser(filePath, true);
+		}
 	}
 
 	@Override
 	public void indexDirectory(String directoryPath) {
-		if(directoryPath == null || directoryPath =="") {
+		if (directoryPath == null || directoryPath == "") {
 			throw new RuntimeErrorException(null);
 		}
 		File folder = new File(directoryPath);
-		File[] listOfFiles = folder.listFiles();
-		for (File file : listOfFiles) {
-			if(file.isDirectory()) {
-				indexDirectory(file.getPath());				
-			}else {
-			this.indexWebPage(file.getAbsolutePath());
+		if (folder.exists()) {
+			File[] listOfFiles = folder.listFiles();
+			for (File file : listOfFiles) {
+				if (file.isDirectory()) {
+					indexDirectory(file.getPath());
+				} else {
+					this.indexWebPage(file.getAbsolutePath());
+				}
 			}
 		}
 	}
 
 	@Override
 	public void deleteWebPage(String filePath) {
-		domParser(filePath,false);
-		
+		if (filePath == null || filePath == "") {
+			throw new RuntimeErrorException(null);
+		}
+		File file = new File(filePath);
+		if (file.exists()) {
+			domParser(filePath, false);
+		}
 	}
 
 	@Override
 	public List<ISearchResult> searchByWordWithRanking(String word) {
+		if (word == null ) {
+			throw new RuntimeErrorException(null);
+		}
+		if(word.equals("")) {
+			return new ArrayList<ISearchResult>();
+		}
 		ArrayList<ISearchResult> result = bT.search(word);
-		
-		
+		if(result==null) {
+			return null;
+		}
 		ordering_basedon_freq(result);
 		return result;
 	}
 
 	@Override
 	public List<ISearchResult> searchByMultipleWordWithRanking(String sentence) {
-		ArrayList<HashMap<String,Integer>> temp = new  ArrayList<HashMap<String , Integer>>();
-		ArrayList<ISearchResult> result = new  ArrayList<ISearchResult>();
-		
-		sentence=sentence.toLowerCase();
-		String[] words = sentence.split("\\s");
-		
-		ArrayList<ISearchResult> first_row = (ArrayList<ISearchResult>) searchByWordWithRanking(words[0]);
-		
-		for(int counter =0 ;counter < words.length ; counter++) {
-			HashMap<String,Integer> hash = new HashMap<String,Integer>();
-			turn_into_hash((ArrayList<ISearchResult>) searchByWordWithRanking(words[counter]),hash);
-			temp.set(counter,hash);
+
+		if (sentence == null ) {
+			throw new RuntimeErrorException(null);
 		}
-		
-		
-		 for(int counter =0 ; counter < first_row.size() ; counter++){
-			String Id =first_row.get(counter).getId();
+		if(sentence.equals("")) {
+			return new ArrayList<ISearchResult>();
+		}
+		ArrayList<HashMap<String, Integer>> temp = new ArrayList<HashMap<String, Integer>>();
+		ArrayList<ISearchResult> result = new ArrayList<ISearchResult>();
+
+		sentence = sentence.toLowerCase();
+		String[] words = sentence.split("\\s");
+
+		ArrayList<ISearchResult> first_row = (ArrayList<ISearchResult>) searchByWordWithRanking(words[0]);
+
+		for (int counter = 0; counter < words.length; counter++) {
+			HashMap<String, Integer> hash = new HashMap<String, Integer>();
+			turn_into_hash((ArrayList<ISearchResult>) searchByWordWithRanking(words[counter]), hash);
+			temp.set(counter, hash);
+		}
+
+		for (int counter = 0; counter < first_row.size(); counter++) {
+			String Id = first_row.get(counter).getId();
 			int minRank = first_row.get(counter).getRank();
-			for(int counter1 =1 ; counter1 <temp.size() ; counter1++) {
+			for (int counter1 = 1; counter1 < temp.size(); counter1++) {
 				int minRank_new = temp.get(counter1).get(Id);
-				if(minRank_new<minRank) {
-					minRank=minRank_new;
+				if (minRank_new < minRank) {
+					minRank = minRank_new;
 				}
-				
+
 			}
 			ISearchResult sr = new MySearchResult();
 			sr.setId(Id);
 			sr.setRank(minRank);
 			result.add(sr);
-			
+
 		}
 		ordering_basedon_freq(result);
 		return result;
 	}
-	
-	private void turn_into_hash(ArrayList<ISearchResult> arr , HashMap<String,Integer> hash) {
-		
-		for(int counter =0; counter <arr.size() ; counter++) {
+
+	private void turn_into_hash(ArrayList<ISearchResult> arr, HashMap<String, Integer> hash) {
+
+		for (int counter = 0; counter < arr.size(); counter++) {
 			hash.put(arr.get(counter).getId(), arr.get(counter).getRank());
 		}
-		
+
 	}
-	
+
 	private void ordering_basedon_freq(ArrayList<ISearchResult> arr) {
-		
-		for(int counter1 =0 ;counter1 < arr.size() ; counter1++) {
+
+		for (int counter1 = 0; counter1 < arr.size(); counter1++) {
 			int min_freq = arr.get(counter1).getRank();
 			int min_ind = counter1;
-			for(int counter2 = counter1+1 ; counter2<arr.size() ; counter2++) {
+			for (int counter2 = counter1 + 1; counter2 < arr.size(); counter2++) {
 				int min_freq_new = arr.get(counter1).getRank();
-				if(min_freq_new < min_freq) {
+				if (min_freq_new < min_freq) {
 					min_freq = min_freq_new;
 					min_ind = counter2;
 				}
@@ -123,7 +144,8 @@ public class MySearchEngine implements ISearchEngine {
 			arr.add(min_ind, sr);
 		}
 	}
-	private void domParser(String filePath , boolean flag) {
+
+	private void domParser(String filePath, boolean flag) {
 		try {
 			File inputFile = new File(filePath);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -142,10 +164,10 @@ public class MySearchEngine implements ISearchEngine {
 					for (String s : str) {
 						s = s.toLowerCase();
 						if (s.compareTo("") != 0) {
-							if(flag) {
-							insertion(s, id);
-							}else {
-								Delete_by_word(s,id);
+							if (flag) {
+								insertion(s, id);
+							} else {
+								Delete_by_word(s, id);
 							}
 						}
 					}
@@ -183,24 +205,24 @@ public class MySearchEngine implements ISearchEngine {
 		}
 
 	}
-	
-	private boolean Delete_by_word(String word,String id) {
+
+	private boolean Delete_by_word(String word, String id) {
 		ArrayList<ISearchResult> arr_sr = bT.search(word);
-		for(int counter=0;counter<arr_sr.size();counter++) {
-			if(id.equals(arr_sr.get(counter).getId())) {
+		for (int counter = 0; counter < arr_sr.size(); counter++) {
+			if (id.equals(arr_sr.get(counter).getId())) {
 				arr_sr.remove(counter);
 				return true;
 			}
-			if(arr_sr.size() ==0) {
+			if (arr_sr.size() == 0) {
 				return bT.delete(word);
 			}
-			if(counter==arr_sr.size()-1 ) {
+			if (counter == arr_sr.size() - 1) {
 				return false;
 			}
 		}
-		
+
 		return false;
-		
+
 	}
 
 }

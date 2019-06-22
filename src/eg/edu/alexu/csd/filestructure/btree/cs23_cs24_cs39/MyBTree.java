@@ -2,21 +2,20 @@ package eg.edu.alexu.csd.filestructure.btree.cs23_cs24_cs39;
 
 import java.util.ArrayList;
 
+import javax.management.RuntimeErrorException;
+
 import eg.edu.alexu.csd.filestructure.btree.IBTree;
 import eg.edu.alexu.csd.filestructure.btree.IBTreeNode;
 
 public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 	private int minimumDegree;
-	private MyBTreeNode<K,V> root;
+	private IBTreeNode<K,V> root;
 	
 	public MyBTree ( int minimumDegree) {
 		this.minimumDegree = minimumDegree;
 		this.root = new MyBTreeNode<K, V>();
-		root.setChildren(null);
-		root.setKeys(null);
-		root.setLeaf(true);
 		root.setNumOfKeys(0);
-		root.setValues(null);
+		root.setLeaf(true);
 	}
 
 	@Override
@@ -27,30 +26,41 @@ public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 
 	@Override
 	public IBTreeNode<K, V> getRoot() {
+		if(this.root.getNumOfKeys()==0) {
+			return null;
+		}
 		IBTreeNode<K, V> root = this.root;
 		return root;
 	}
 
 	@Override
 	public void insert(K key, V value) {
-		MyBTreeNode<K,V> r = (MyBTreeNode<K, V>) root;
+		
+		if(key == null || value == null) {
+			throw new RuntimeErrorException(null);
+		}
+		
 		if(root.getNumOfKeys() == (2*minimumDegree - 1)) {
-			MyBTreeNode<K,V> s = (MyBTreeNode<K, V>) r;
+			IBTreeNode<K,V> s = new MyBTreeNode<K,V>();
 			s.setLeaf(false);
 			s.setNumOfKeys(0);
-			setChildAtIndex(r, 0,s);
+			setChildAtIndex(root, 0,s);
+			root = s;
 			splitChild(s, 0);
 			insertNonFull(s, key, value);
-			root = s;
+			
 		}
 		else {
-			insertNonFull((MyBTreeNode<K, V>) root, key, value);
+			insertNonFull( root, key, value);
 		}
 
 	}
 
 	@Override
 	public V search(K key) {
+		if(key == null) {
+			throw new RuntimeErrorException(null);
+			}
 		return searchInNode(root, key);
 	}
 
@@ -60,73 +70,88 @@ public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 		return false;
 	}
 	
-	private void splitChild(MyBTreeNode<K,V> toBeSplit , int index) {
-		MyBTreeNode<K, V> split2 = new MyBTreeNode<K,V> ();
-		MyBTreeNode<K, V> split1 = (MyBTreeNode<K, V>) getChildAtIndex(index,toBeSplit);
+	private void splitChild(IBTreeNode<K,V> toBeSplit , int index) {
+		IBTreeNode<K, V> split2 = new MyBTreeNode<K,V> ();
+		IBTreeNode<K, V> split1 = (MyBTreeNode<K, V>) getChildAtIndex(index,toBeSplit);
 		split2.setLeaf(split1.isLeaf());
 		split2.setNumOfKeys(minimumDegree-1);
-		split2.setNumOfKeys(minimumDegree - 1);
 		
-		for (int i=0 ; i<minimumDegree - 1 ; i++) {
+		for (int i=0 ; i<minimumDegree-1 ; i++) {
 			setKeyAtIndex(getKeyAtIndex(i+minimumDegree,split1), i,split2);
-			split1.getKeys().remove(i+minimumDegree);
-			
 			setValueAtIndex(getValueAtIndex(i+minimumDegree,split1), i,split2);
-			split1.getValues().remove(i+minimumDegree);
+			
 		}
+		
 		
 		if (!split1.isLeaf()) {
-			for (int i=0 ; i<minimumDegree -1 ; i++) {
+			for (int i=0 ; i<minimumDegree  ; i++) {
 				setChildAtIndex(getChildAtIndex(i+minimumDegree,split1),i,split2);
-				split1.getChildren().remove(i+minimumDegree);
+				
 			}
+			for (int i=0 ; i<minimumDegree  ; i++) {
+				split1.getChildren().remove(minimumDegree);
+			}
+			
 		}
 		
-		split1.setNumOfKeys(minimumDegree-1);
-		
-		for (int i=toBeSplit.getNumOfKeys()+1 ; 1>index+1 ; i--) {
-			setChildAtIndex(getChildAtIndex(i,toBeSplit), i+1,toBeSplit);
+		for (int i=0 ; i<minimumDegree-1 ; i++) {
+			split1.getKeys().remove(minimumDegree);
+			split1.getValues().remove(minimumDegree);
+			
 		}
+		
+		
+		
+		
 		
 		setChildAtIndex(split2, index+1,toBeSplit);
 		
-		for (int i=toBeSplit.getNumOfKeys(); i>index ; i--) {
-			setKeyAtIndex(getKeyAtIndex(i+1,toBeSplit), i,toBeSplit);
-		}
 		
-		setKeyAtIndex(getKeyAtIndex(minimumDegree,split1), index,toBeSplit);
+		setKeyAtIndex(getKeyAtIndex(minimumDegree-1,split1), index,toBeSplit);
+		setValueAtIndex(getValueAtIndex(minimumDegree-1,split1), index,toBeSplit);
+		
+		split1.getKeys().remove(minimumDegree-1);
+		split1.getValues().remove(minimumDegree-1);
 		
 		toBeSplit.setNumOfKeys(toBeSplit.getNumOfKeys()+1);
+		split1.setNumOfKeys(minimumDegree-1);
 	}
 	
-	private void insertNonFull(MyBTreeNode<K,V> toBeInserted , K key , V value ) {
-		int index = toBeInserted.getNumOfKeys();
+	private void insertNonFull(IBTreeNode<K,V> toBeInserted , K key , V value ) {
+		int index = toBeInserted.getNumOfKeys()-1;
 		
-		if (toBeInserted.isLeaf()) {
-			while(index>0 && key.compareTo(getKeyAtIndex(index,toBeInserted))<0) {
-				setKeyAtIndex(getKeyAtIndex(index,toBeInserted), index+1,toBeInserted);
-				setValueAtIndex(getValueAtIndex(index,toBeInserted), index+1,toBeInserted);
+		if (toBeInserted.isLeaf() ) {
+			while(index>=0 && key.compareTo(getKeyAtIndex(index,toBeInserted))<=0) {
+				if(key.compareTo(getKeyAtIndex(index,toBeInserted))==0) {
+					return;
+				}
 				index--;
 			}
 			setKeyAtIndex(key, index+1,toBeInserted);
 			setValueAtIndex(value, index+1,toBeInserted);
 			toBeInserted.setNumOfKeys(toBeInserted.getNumOfKeys()+1);
-		}
+			
+			}
 		else {
-			while(index>0 && key.compareTo(getKeyAtIndex(index,toBeInserted))<0) {
+			while(index>=0 && key.compareTo(getKeyAtIndex(index,toBeInserted))<=0) {
+				if(key.compareTo(getKeyAtIndex(index,toBeInserted))==0) {
+					return;
+				}
 				index--;
 			}
 			index++;
 			if (getChildAtIndex(index,toBeInserted).getNumOfKeys() == (2*minimumDegree -1)) {
 				splitChild(toBeInserted, index);
 				if(key.compareTo(getKeyAtIndex(index,toBeInserted))>0) {
-					insertNonFull((MyBTreeNode<K, V>) getChildAtIndex(index,toBeInserted), key, value);
+					index++;
 				}
+				
 			}
+			insertNonFull((MyBTreeNode<K, V>) getChildAtIndex(index,toBeInserted), key, value);
 		}
 	}
 	
-	private  V searchInNode (MyBTreeNode<K,V> node , K key) {
+	private  V searchInNode (IBTreeNode<K,V> node , K key) {
 		int index = 0;
 		
 		while(index < node.getNumOfKeys() && key.compareTo(getKeyAtIndex(index,node))>0) {
