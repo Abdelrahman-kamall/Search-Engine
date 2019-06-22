@@ -773,7 +773,7 @@ public class UnitTest {
 			Collections.sort(actual, new Comparator<ISearchResult>() {
 				@Override
 				public int compare(ISearchResult o1, ISearchResult o2) {
-					return o1.getRank() - o2.getRank();
+					return Integer.parseInt(o1.getId())-Integer.parseInt(o2.getId());
 				}
 			});
 
@@ -840,7 +840,7 @@ public class UnitTest {
 			Collections.sort(actual, new Comparator<ISearchResult>() {
 				@Override
 				public int compare(ISearchResult o1, ISearchResult o2) {
-					return o1.getRank() - o2.getRank();
+					return Integer.parseInt(o1.getId())-Integer.parseInt(o2.getId());
 				}
 			});
 
@@ -880,7 +880,7 @@ public class UnitTest {
 			Collections.sort(actual, new Comparator<ISearchResult>() {
 				@Override
 				public int compare(ISearchResult o1, ISearchResult o2) {
-					return o1.getRank() - o2.getRank();
+					return Integer.parseInt(o1.getId())-Integer.parseInt(o2.getId());
 				}
 			});
 
@@ -947,7 +947,7 @@ public class UnitTest {
 			Collections.sort(actual, new Comparator<ISearchResult>() {
 				@Override
 				public int compare(ISearchResult o1, ISearchResult o2) {
-					return o1.getRank() - o2.getRank();
+					return Integer.parseInt(o1.getId())-Integer.parseInt(o2.getId());
 				}
 			});
 			for (int i = 0; i < expected.size(); i++) {
@@ -987,7 +987,7 @@ public class UnitTest {
 			Collections.sort(actual, new Comparator<ISearchResult>() {
 				@Override
 				public int compare(ISearchResult o1, ISearchResult o2) {
-					return o1.getRank() - o2.getRank();
+					return Integer.parseInt(o1.getId())-Integer.parseInt(o2.getId());
 				}
 			});
 			for (int i = 0; i < expected.size(); i++) {
@@ -1091,7 +1091,7 @@ public class UnitTest {
 			Collections.sort(actual, new Comparator<ISearchResult>() {
 				@Override
 				public int compare(ISearchResult o1, ISearchResult o2) {
-					return o1.getRank() - o2.getRank();
+					return Integer.parseInt(o1.getId())-Integer.parseInt(o2.getId());
 				}
 			});
 

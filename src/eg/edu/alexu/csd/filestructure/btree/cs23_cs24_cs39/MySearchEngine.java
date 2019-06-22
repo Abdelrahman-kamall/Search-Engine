@@ -91,14 +91,14 @@ public class MySearchEngine implements ISearchEngine {
 		ArrayList<ISearchResult> result = new ArrayList<ISearchResult>();
 
 		sentence = sentence.toLowerCase();
-		String[] words = sentence.split("\\s");
+		String[] words = sentence.split("\\s+");
 
 		ArrayList<ISearchResult> first_row = (ArrayList<ISearchResult>) searchByWordWithRanking(words[0]);
 
 		for (int counter = 0; counter < words.length; counter++) {
 			HashMap<String, Integer> hash = new HashMap<String, Integer>();
 			turn_into_hash((ArrayList<ISearchResult>) searchByWordWithRanking(words[counter]), hash);
-			temp.set(counter, hash);
+			temp.add(counter, hash);
 		}
 
 		for (int counter = 0; counter < first_row.size(); counter++) {
@@ -143,7 +143,7 @@ public class MySearchEngine implements ISearchEngine {
 			}
 			ISearchResult sr = arr.get(min_ind);
 			arr.remove(min_ind);
-			arr.add(min_ind, sr);
+			arr.add(counter1, sr);
 		}
 	}
 
