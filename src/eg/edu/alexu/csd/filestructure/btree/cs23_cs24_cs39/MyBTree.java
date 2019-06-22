@@ -44,6 +44,9 @@ public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 			throw new RuntimeErrorException(null);
 		}
 		
+			
+		
+		
 		if(root.getNumOfKeys() == (2*minimumDegree - 1)) {
 			IBTreeNode<K,V> s = new MyBTreeNode<K,V>();
 			s.setLeaf(false);
@@ -147,6 +150,9 @@ public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 			index++;
 			if (getChildAtIndex(index,toBeInserted).getNumOfKeys() == (2*minimumDegree -1)) {
 				splitChild(toBeInserted, index);
+				if(key.compareTo(getKeyAtIndex(index,toBeInserted))==0) {
+					return;
+				}
 				if(key.compareTo(getKeyAtIndex(index,toBeInserted))>0) {
 					index++;
 				}
