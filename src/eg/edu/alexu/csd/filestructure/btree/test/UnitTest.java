@@ -1137,8 +1137,8 @@ public class UnitTest {
 			keys.add(node.getKeys().get(i));
 			vals.add(node.getValues().get(i));
 		} 
-		if (!node.isLeaf()) 
-			traverseTreeInorder(node.getChildren().get(i), keys, vals);
+		//if (!node.isLeaf()) 
+			//traverseTreeInorder(node.getChildren().get(i), keys, vals);
 	}
 
 	private void traverseBtreePreOrder(IBTreeNode<?, ?> node, int level, List<List<List<?>>> keys) {

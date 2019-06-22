@@ -12,6 +12,9 @@ public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 	private IBTreeNode<K,V> root;
 	
 	public MyBTree ( int minimumDegree) {
+		if(minimumDegree < 2) {
+			throw new RuntimeErrorException(null);
+		}
 		this.minimumDegree = minimumDegree;
 		this.root = new MyBTreeNode<K, V>();
 		root.setNumOfKeys(0);
@@ -20,6 +23,7 @@ public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 
 	@Override
 	public int getMinimumDegree() {
+		
 		int minimumDegree = this.minimumDegree;
 		return minimumDegree;
 	}
@@ -66,7 +70,9 @@ public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 
 	@Override
 	public boolean delete(K key) {
-		// TODO Auto-generated method stub
+		if(key == null) {
+			throw new RuntimeErrorException(null);
+		}
 		return false;
 	}
 	
@@ -131,8 +137,7 @@ public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 			setValueAtIndex(value, index+1,toBeInserted);
 			toBeInserted.setNumOfKeys(toBeInserted.getNumOfKeys()+1);
 			
-			}
-		else {
+			}else {
 			while(index>=0 && key.compareTo(getKeyAtIndex(index,toBeInserted))<=0) {
 				if(key.compareTo(getKeyAtIndex(index,toBeInserted))==0) {
 					return;

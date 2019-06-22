@@ -14,7 +14,7 @@ import eg.edu.alexu.csd.filestructure.btree.ISearchEngine;
 import eg.edu.alexu.csd.filestructure.btree.ISearchResult;
 
 public class MySearchEngine implements ISearchEngine {
-	IBTree<String, ArrayList<ISearchResult>> bT = new MyBTree<String, ArrayList<ISearchResult>>(0);
+	IBTree<String, ArrayList<ISearchResult>> bT = new MyBTree<String, ArrayList<ISearchResult>>(2);
 
 	public MySearchEngine(int t) {
 		bT = new MyBTree<String, ArrayList<ISearchResult>>(t);
@@ -62,12 +62,14 @@ public class MySearchEngine implements ISearchEngine {
 
 	@Override
 	public List<ISearchResult> searchByWordWithRanking(String word) {
+		
 		if (word == null ) {
 			throw new RuntimeErrorException(null);
 		}
 		if(word.equals("")) {
 			return new ArrayList<ISearchResult>();
 		}
+		word = word.toLowerCase();
 		ArrayList<ISearchResult> result = bT.search(word);
 		if(result==null) {
 			return null;
@@ -133,7 +135,7 @@ public class MySearchEngine implements ISearchEngine {
 			int min_freq = arr.get(counter1).getRank();
 			int min_ind = counter1;
 			for (int counter2 = counter1 + 1; counter2 < arr.size(); counter2++) {
-				int min_freq_new = arr.get(counter1).getRank();
+				int min_freq_new = arr.get(counter2).getRank();
 				if (min_freq_new < min_freq) {
 					min_freq = min_freq_new;
 					min_ind = counter2;
