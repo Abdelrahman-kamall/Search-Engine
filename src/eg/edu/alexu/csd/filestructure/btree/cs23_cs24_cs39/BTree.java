@@ -174,25 +174,25 @@ public class BTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 	}
 
 	private boolean delete_logic(IBTreeNode<K, V> node, K key) {
-		System.out.println("___________________________________________");
+		////System.out.println("___________________________________________");
 
 		if (node == null) {
 			return false;
 		}
 
 		for (int counter = 0; counter < node.getNumOfKeys(); counter++) {
-			System.out.println("key" + counter);
+			////System.out.println("key" + counter);
 			if (key.equals(this.getKeyAtIndex(counter, node))) {
 
 				if (node.isLeaf()) {
-					System.out.println("case1");
+					//System.out.println("case1");
 					return delete_leaf(node, counter);
 				} else {
 
 					if (node.getChildren().get(counter).getNumOfKeys() > this.getMinimumDegree() - 1) {
 						Pair<IBTreeNode<K, V>, Integer> pre = predecessor(node, counter);
 						if (pre != null) {
-							System.out.println("case2.a");
+							//System.out.println("case2.a");
 							return after_pre(node, counter, pre);
 						}
 					}
@@ -200,14 +200,14 @@ public class BTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 							&& node.getChildren().get(counter + 1).getNumOfKeys() > this.getMinimumDegree() - 1) {
 						Pair<IBTreeNode<K, V>, Integer> suc = successor(node, counter);
 						if (suc != null) {
-							System.out.println("case2.b");
+							//System.out.println("case2.b");
 							return after_pre(node, counter, suc);
 						}
 					}
 					if (node.getChildren().size() > counter + 1
 							&& node.getChildren().get(counter + 1).getNumOfKeys() == this.getMinimumDegree() - 1
 							&& node.getChildren().get(counter).getNumOfKeys() == this.getMinimumDegree() - 1) {
-						System.out.println("case2.c");
+						//System.out.println("case2.c");
 						combine(node, counter);
 						if (node == this.getRoot() && node.getNumOfKeys() == 1) {
 
@@ -233,19 +233,19 @@ public class BTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 
 			} else if (key.compareTo(this.getKeyAtIndex(counter, node)) < 0) {
 				if (node.isLeaf()) {
-					System.out.println("here1");
+					//System.out.println("here1");
 					return false;
 				}
 				if (node.getChildren().get(counter).getNumOfKeys() == this.getMinimumDegree() - 1) {
 					if (node.getChildren().get(counter + 1).getNumOfKeys() > this.getMinimumDegree() - 1) {
-						System.out.println("case3.a1");
+						//System.out.println("case3.a1");
 						swap(node, counter, false);
 					} else if (counter != 0
 							&& node.getChildren().get(counter - 1).getNumOfKeys() > this.getMinimumDegree() - 1) {
-						System.out.println("case3.a2");
+						//System.out.println("case3.a2");
 						swap(node, counter - 1, true);
 					} else {
-						System.out.println("case3.a3");
+						//System.out.println("case3.a3");
 						combine(node, counter);
 						if (node == this.getRoot() && node.getNumOfKeys() == 1) {
 							this.root = node.getChildren().get(0);
@@ -260,16 +260,16 @@ public class BTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 
 			} else if (counter == node.getNumOfKeys() - 1 && key.compareTo(this.getKeyAtIndex(counter, node)) > 0) {
 				if (node.isLeaf()) {
-					System.out.println("here2");
+					//System.out.println("here2");
 					return false;
 				}
 				if (node.getChildren().get(node.getChildren().size() - 1).getNumOfKeys() == this.getMinimumDegree()
 						- 1) {
 					if (node.getChildren().get(counter).getNumOfKeys() > this.getMinimumDegree() - 1) {
 						swap(node, counter, true);
-						System.out.println("case3.b1");
+						//System.out.println("case3.b1");
 					} else {
-						System.out.println("case3.b2");
+						//System.out.println("case3.b2");
 						combine(node, counter);
 						if (node == this.getRoot() && node.getNumOfKeys() == 1) {
 							this.root = node.getChildren().get(0);
@@ -284,7 +284,7 @@ public class BTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 			}
 		}
 		if (true) {
-			System.out.println("here3");
+			//System.out.println("here3");
 		}
 
 		return true;
@@ -300,7 +300,7 @@ public class BTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 	}
 
 	private void combine(IBTreeNode<K, V> parent, int index) {
-		System.out.println("comb");
+		//System.out.println("comb");
 		parent.getChildren().get(index).getKeys().add(parent.getKeys().get(index));
 		parent.getChildren().get(index).getValues().add(parent.getValues().get(index));
 		parent.getChildren().get(index).setNumOfKeys(parent.getChildren().get(index).getNumOfKeys() + 1);
@@ -334,7 +334,7 @@ public class BTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 	private void swap(IBTreeNode<K, V> parent, int index, boolean flag) {
 		// right ==> true / left ==> false
 		if (flag) {
-			System.out.println("swap true");
+			//System.out.println("swap true");
 			parent.getChildren().get(index + 1).getKeys().add(0, parent.getKeys().get(index));
 			parent.getChildren().get(index + 1).getValues().add(0, parent.getValues().get(index));
 			parent.getChildren().get(index + 1).setNumOfKeys(parent.getChildren().get(index + 1).getNumOfKeys() + 1);
@@ -357,7 +357,7 @@ public class BTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 			}
 
 		} else {
-			System.out.println("swap false");
+			//System.out.println("swap false");
 			parent.getChildren().get(index).getKeys().add(parent.getKeys().get(index));
 			parent.getChildren().get(index).getValues().add(parent.getValues().get(index));
 			parent.getChildren().get(index).setNumOfKeys(parent.getChildren().get(index).getNumOfKeys() + 1);
@@ -381,7 +381,7 @@ public class BTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 
 	private Pair<IBTreeNode<K, V>, Integer> predecessor(IBTreeNode<K, V> nodeToBeDeleted, int index) {
 
-		System.out.println("pre");
+		//System.out.println("pre");
 		int predecessorIndex = 0;
 		Pair<IBTreeNode<K, V>, Integer> pair = null;
 		IBTreeNode<K, V> child = getChildAtIndex(index, nodeToBeDeleted);
@@ -400,7 +400,7 @@ public class BTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 	}
 
 	boolean after_pre(IBTreeNode<K, V> node, int counter, Pair<IBTreeNode<K, V>, Integer> pr) {
-		System.out.println("after pre");
+		//System.out.println("after pre");
 		K temp = pr.getKey().getKeys().get(pr.getValue());
 		V value = pr.getKey().getValues().get(pr.getValue());
 
@@ -413,7 +413,7 @@ public class BTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 	}
 
 	private Pair<IBTreeNode<K, V>, Integer> successor(IBTreeNode<K, V> nodeToBeDeleted, int index) {
-		System.out.println("suc");
+		//System.out.println("suc");
 		int successorIndexdex = -1;
 		IBTreeNode<K, V> child = getChildAtIndex(index + 1, nodeToBeDeleted);
 		Pair<IBTreeNode<K, V>, Integer> pair = null;

@@ -935,7 +935,7 @@ public class UnitTest {
 		 */
 		try {
 			searchEngine.indexDirectory("res");
-			searchEngine.deleteWebPage("res\\wiki_00");
+			searchEngine.deleteWebPage("res\\wiki_01");
 			List<ISearchResult> expected = Arrays.asList(new SearchResult[]{new SearchResult("7697605", 1), new SearchResult("7697611", 10)});
 			List<ISearchResult> actual = searchEngine.searchByWordWithRanking("ThE");
 			//for (ISearchResult searchRes : actual) {
@@ -1080,7 +1080,7 @@ public class UnitTest {
 		 */
 		try {
 			searchEngine.indexDirectory("res");
-			List<ISearchResult> expected = Arrays.asList(new SearchResult[]{new SearchResult("7697605", 1), new SearchResult("7697611", 10)});
+			List<ISearchResult> expected = Arrays.asList(new SearchResult[]{});
 			List<ISearchResult> actual = searchEngine.searchByMultipleWordWithRanking("   tHe  is  aRE   		");
 			//for (ISearchResult searchRes : actual) {
 				//System.out.println(searchRes.toString());
