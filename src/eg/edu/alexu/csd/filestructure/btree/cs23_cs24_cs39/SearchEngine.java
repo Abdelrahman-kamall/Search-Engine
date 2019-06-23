@@ -210,6 +210,9 @@ public class SearchEngine implements ISearchEngine {
 
 	private boolean Delete_by_word(String word, String id) {
 		ArrayList<ISearchResult> arr_sr = bT.search(word);
+		if(bT.search(word)== null) {
+			return false;
+		}
 		for (int counter = 0; counter < arr_sr.size(); counter++) {
 			if (id.equals(arr_sr.get(counter).getId())) {
 				arr_sr.remove(counter);
