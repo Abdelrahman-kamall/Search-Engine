@@ -8,16 +8,16 @@ import eg.edu.alexu.csd.filestructure.btree.IBTree;
 import eg.edu.alexu.csd.filestructure.btree.IBTreeNode;
 import javafx.util.Pair;
 
-public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
+public class BTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 	private int minimumDegree;
 	private IBTreeNode<K, V> root;
 
-	public MyBTree(int minimumDegree) {
+	public BTree(int minimumDegree) {
 		if (minimumDegree < 2) {
 			throw new RuntimeErrorException(null);
 		}
 		this.minimumDegree = minimumDegree;
-		this.root = new MyBTreeNode<K, V>();
+		this.root = new BTreeNode<K, V>();
 		root.setNumOfKeys(0);
 		root.setLeaf(true);
 	}
@@ -46,7 +46,7 @@ public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 		}
 
 		if (root.getNumOfKeys() == (2 * minimumDegree - 1)) {
-			IBTreeNode<K, V> s = new MyBTreeNode<K, V>();
+			IBTreeNode<K, V> s = new BTreeNode<K, V>();
 			s.setLeaf(false);
 			s.setNumOfKeys(0);
 			setChildAtIndex(root, 0, s);
@@ -81,8 +81,8 @@ public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 	}
 
 	private void splitChild(IBTreeNode<K, V> toBeSplit, int index) {
-		IBTreeNode<K, V> split2 = new MyBTreeNode<K, V>();
-		IBTreeNode<K, V> split1 = (MyBTreeNode<K, V>) getChildAtIndex(index, toBeSplit);
+		IBTreeNode<K, V> split2 = new BTreeNode<K, V>();
+		IBTreeNode<K, V> split1 = (BTreeNode<K, V>) getChildAtIndex(index, toBeSplit);
 		split2.setLeaf(split1.isLeaf());
 		split2.setNumOfKeys(minimumDegree - 1);
 
@@ -153,7 +153,7 @@ public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 				}
 
 			}
-			insertNonFull((MyBTreeNode<K, V>) getChildAtIndex(index, toBeInserted), key, value);
+			insertNonFull((BTreeNode<K, V>) getChildAtIndex(index, toBeInserted), key, value);
 		}
 	}
 
@@ -169,7 +169,7 @@ public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 		} else if (node.isLeaf())
 			return null;
 		else {
-			return searchInNode((MyBTreeNode<K, V>) getChildAtIndex(index, node), key);
+			return searchInNode((BTreeNode<K, V>) getChildAtIndex(index, node), key);
 		}
 	}
 

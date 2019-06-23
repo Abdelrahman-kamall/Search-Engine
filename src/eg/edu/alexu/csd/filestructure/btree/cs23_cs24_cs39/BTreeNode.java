@@ -5,7 +5,7 @@ import java.util.List;
 
 import eg.edu.alexu.csd.filestructure.btree.IBTreeNode;
 
-public class MyBTreeNode<K extends Comparable<K>, V> implements IBTreeNode<K, V> {
+public class BTreeNode<K extends Comparable<K>, V> implements IBTreeNode<K, V> {
 
 	private int numOfKeys;
 	private boolean isLeaf;

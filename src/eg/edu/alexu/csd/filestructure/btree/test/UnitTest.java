@@ -20,17 +20,14 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.management.RuntimeErrorException;
-import javax.naming.directory.SearchResult;
-
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Assert;
 import org.junit.Test;
-
 import eg.edu.alexu.csd.filestructure.btree.IBTree;
 import eg.edu.alexu.csd.filestructure.btree.IBTreeNode;
 import eg.edu.alexu.csd.filestructure.btree.ISearchEngine;
 import eg.edu.alexu.csd.filestructure.btree.ISearchResult;
-import eg.edu.alexu.csd.filestructure.btree.cs23_cs24_cs39.MySearchResult;
+import eg.edu.alexu.csd.filestructure.btree.cs23_cs24_cs39.SearchResult;
 
 
 public class UnitTest {
@@ -765,7 +762,7 @@ public class UnitTest {
 		 */
 		try {
 			searchEngine.indexWebPage("res\\wiki_00");
-			List<ISearchResult> expected = Arrays.asList(new MySearchResult[]{new MySearchResult("7697605", 1), new MySearchResult("7697611", 10)});
+			List<ISearchResult> expected = Arrays.asList(new SearchResult[]{new SearchResult("7697605", 1), new SearchResult("7697611", 10)});
 			List<ISearchResult> actual = searchEngine.searchByWordWithRanking("ThE");
 			//for (ISearchResult searchRes : actual) {
 				//System.out.println(searchRes.toString());
@@ -832,7 +829,7 @@ public class UnitTest {
 		 */
 		try {
 			searchEngine.indexDirectory("res");
-			List<ISearchResult> expected = Arrays.asList(new MySearchResult[]{new MySearchResult("7697605", 1), new MySearchResult("7697611", 10)});
+			List<ISearchResult> expected = Arrays.asList(new SearchResult[]{new SearchResult("7697605", 1), new SearchResult("7697611", 10)});
 			List<ISearchResult> actual = searchEngine.searchByWordWithRanking("ThE");
 			//for (ISearchResult searchRes : actual) {
 				//System.out.println(searchRes.toString());
@@ -872,7 +869,7 @@ public class UnitTest {
 		 */
 		try {
 			searchEngine.indexDirectory("res");
-			List<ISearchResult> expected = Arrays.asList(new MySearchResult[]{new MySearchResult("7697605", 1), new MySearchResult("7697611", 10)});
+			List<ISearchResult> expected = Arrays.asList(new SearchResult[]{new SearchResult("7697605", 1), new SearchResult("7697611", 10)});
 			List<ISearchResult> actual = searchEngine.searchByWordWithRanking("ThE");
 			//for (ISearchResult searchRes : actual) {
 			//	System.out.println(searchRes.toString());
@@ -939,7 +936,7 @@ public class UnitTest {
 		try {
 			searchEngine.indexDirectory("res");
 			searchEngine.deleteWebPage("res\\wiki_00");
-			List<ISearchResult> expected = Arrays.asList(new MySearchResult[]{new MySearchResult("7697605", 1), new MySearchResult("7697611", 10)});
+			List<ISearchResult> expected = Arrays.asList(new SearchResult[]{new SearchResult("7697605", 1), new SearchResult("7697611", 10)});
 			List<ISearchResult> actual = searchEngine.searchByWordWithRanking("ThE");
 			//for (ISearchResult searchRes : actual) {
 				//System.out.println(searchRes.toString());
@@ -979,7 +976,7 @@ public class UnitTest {
 			searchEngine.indexWebPage("res\\wiki_00");
 			searchEngine.indexWebPage("res\\subfolder\\wiki_02");
 			searchEngine.deleteWebPage("res\\wiki_01");
-			List<ISearchResult> expected = Arrays.asList(new MySearchResult[]{new MySearchResult("7697605", 1), new MySearchResult("7697611", 10)});
+			List<ISearchResult> expected = Arrays.asList(new SearchResult[]{new SearchResult("7697605", 1), new SearchResult("7697611", 10)});
 			List<ISearchResult> actual = searchEngine.searchByWordWithRanking("ThE");
 			//for (ISearchResult searchRes : actual) {
 				//System.out.println(searchRes.toString());
@@ -1083,7 +1080,7 @@ public class UnitTest {
 		 */
 		try {
 			searchEngine.indexDirectory("res");
-			List<ISearchResult> expected = Arrays.asList(new MySearchResult[]{new MySearchResult("7697605", 1), new MySearchResult("7697611", 10)});
+			List<ISearchResult> expected = Arrays.asList(new SearchResult[]{new SearchResult("7697605", 1), new SearchResult("7697611", 10)});
 			List<ISearchResult> actual = searchEngine.searchByMultipleWordWithRanking("   tHe  is  aRE   		");
 			//for (ISearchResult searchRes : actual) {
 				//System.out.println(searchRes.toString());

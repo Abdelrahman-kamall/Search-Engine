@@ -13,11 +13,11 @@ import eg.edu.alexu.csd.filestructure.btree.IBTree;
 import eg.edu.alexu.csd.filestructure.btree.ISearchEngine;
 import eg.edu.alexu.csd.filestructure.btree.ISearchResult;
 
-public class MySearchEngine implements ISearchEngine {
-	IBTree<String, ArrayList<ISearchResult>> bT = new MyBTree<String, ArrayList<ISearchResult>>(2);
+public class SearchEngine implements ISearchEngine {
+	IBTree<String, ArrayList<ISearchResult>> bT = new BTree<String, ArrayList<ISearchResult>>(2);
 
-	public MySearchEngine(int t) {
-		bT = new MyBTree<String, ArrayList<ISearchResult>>(t);
+	public SearchEngine(int t) {
+		bT = new BTree<String, ArrayList<ISearchResult>>(t);
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class MySearchEngine implements ISearchEngine {
 				}
 
 			}
-			ISearchResult sr = new MySearchResult();
+			ISearchResult sr = new SearchResult();
 			sr.setId(Id);
 			sr.setRank(minRank);
 			result.add(sr);
@@ -192,13 +192,13 @@ public class MySearchEngine implements ISearchEngine {
 				}
 			}
 			if (!flag) {
-				ISearchResult sResult = new MySearchResult();
+				ISearchResult sResult = new SearchResult();
 				sResult.setId(id);
 				sResult.setRank(1);
 				temp.add(sResult);
 			}
 		} else {
-			ISearchResult sResult = new MySearchResult();
+			ISearchResult sResult = new SearchResult();
 			sResult.setId(id);
 			sResult.setRank(1);
 			ArrayList<ISearchResult> aL = new ArrayList<ISearchResult>();
