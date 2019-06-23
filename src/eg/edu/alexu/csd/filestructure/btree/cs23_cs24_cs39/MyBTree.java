@@ -187,20 +187,15 @@ public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 					if (node.getChildren().get(counter).getNumOfKeys() > this.getMinimumDegree() - 1) {
 						Pair<IBTreeNode<K, V>, Integer> pre = predecessor(node, counter);
 						if (pre != null) {
-							K temp = node.getKeys().get(counter);
-							node.getKeys().set(counter, pre.getKey().getKeys().get(pre.getValue()));
-							pre.getKey().getKeys().set(pre.getValue(), temp);
-
-							return delete_logic(node, key);
+							
+							return after_pre(node,counter,pre);
 						}
 					} else if (node.getChildren().size() > counter + 1
 							&& node.getChildren().get(counter + 1).getNumOfKeys() > this.getMinimumDegree() - 1) {
 						Pair<IBTreeNode<K, V>, Integer> suc = successor(node, counter);
 						if (suc != null) {
-							K temp = node.getKeys().get(counter);
-							node.getKeys().set(counter, suc.getKey().getKeys().get(suc.getValue()));
-							suc.getKey().getKeys().set(suc.getValue(), temp);
-							return delete_logic(node, key);
+							
+							 return after_pre(node,counter,suc);
 						}
 					} else {
 						combine(node, counter);
@@ -340,9 +335,27 @@ public class MyBTree<K extends Comparable<K>, V> implements IBTree<K, V> {
 
 		if (child.isLeaf()) {
 			pair = new Pair<IBTreeNode<K, V>, Integer>(child, predecessorIndex);
-
+			
+			
+			
 		}
 		return pair;
+	}
+	
+	boolean after_pre(IBTreeNode<K, V> node , int counter , Pair<IBTreeNode<K, V>, Integer> pr) {
+		
+		
+		K temp = pr.getKey().getKeys().get(pr.getValue());
+		V value = pr.getKey().getValues().get(pr.getValue());
+		
+		delete_logic(node, pr.getKey().getKeys().get(pr.getValue()));
+		
+		
+		node.getKeys().set(counter, temp);
+		node.getValues().set(counter, value);
+		
+		
+		return true;
 	}
 
 	private Pair<IBTreeNode<K, V>, Integer> successor(IBTreeNode<K, V> nodeToBeDeleted, int index) {
