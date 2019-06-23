@@ -767,9 +767,9 @@ public class UnitTest {
 			searchEngine.indexWebPage("res\\wiki_00");
 			List<ISearchResult> expected = Arrays.asList(new MySearchResult[]{new MySearchResult("7697605", 1), new MySearchResult("7697611", 10)});
 			List<ISearchResult> actual = searchEngine.searchByWordWithRanking("ThE");
-			for (ISearchResult searchRes : actual) {
-				System.out.println(searchRes.toString());
-			}
+			//for (ISearchResult searchRes : actual) {
+				//System.out.println(searchRes.toString());
+			//}
 			Collections.sort(actual, new Comparator<ISearchResult>() {
 				@Override
 				public int compare(ISearchResult o1, ISearchResult o2) {
@@ -834,9 +834,9 @@ public class UnitTest {
 			searchEngine.indexDirectory("res");
 			List<ISearchResult> expected = Arrays.asList(new MySearchResult[]{new MySearchResult("7697605", 1), new MySearchResult("7697611", 10)});
 			List<ISearchResult> actual = searchEngine.searchByWordWithRanking("ThE");
-			for (ISearchResult searchRes : actual) {
-				System.out.println(searchRes.toString());
-			}
+			//for (ISearchResult searchRes : actual) {
+				//System.out.println(searchRes.toString());
+			//}
 			Collections.sort(actual, new Comparator<ISearchResult>() {
 				@Override
 				public int compare(ISearchResult o1, ISearchResult o2) {
@@ -874,9 +874,9 @@ public class UnitTest {
 			searchEngine.indexDirectory("res");
 			List<ISearchResult> expected = Arrays.asList(new MySearchResult[]{new MySearchResult("7697605", 1), new MySearchResult("7697611", 10)});
 			List<ISearchResult> actual = searchEngine.searchByWordWithRanking("ThE");
-			for (ISearchResult searchRes : actual) {
-				System.out.println(searchRes.toString());
-			}
+			//for (ISearchResult searchRes : actual) {
+			//	System.out.println(searchRes.toString());
+			//}
 			Collections.sort(actual, new Comparator<ISearchResult>() {
 				@Override
 				public int compare(ISearchResult o1, ISearchResult o2) {
@@ -941,9 +941,9 @@ public class UnitTest {
 			searchEngine.deleteWebPage("res\\wiki_00");
 			List<ISearchResult> expected = Arrays.asList(new MySearchResult[]{new MySearchResult("7697605", 1), new MySearchResult("7697611", 10)});
 			List<ISearchResult> actual = searchEngine.searchByWordWithRanking("ThE");
-			for (ISearchResult searchRes : actual) {
-				System.out.println(searchRes.toString());
-			}
+			//for (ISearchResult searchRes : actual) {
+				//System.out.println(searchRes.toString());
+			//}
 			Collections.sort(actual, new Comparator<ISearchResult>() {
 				@Override
 				public int compare(ISearchResult o1, ISearchResult o2) {
@@ -981,9 +981,9 @@ public class UnitTest {
 			searchEngine.deleteWebPage("res\\wiki_01");
 			List<ISearchResult> expected = Arrays.asList(new MySearchResult[]{new MySearchResult("7697605", 1), new MySearchResult("7697611", 10)});
 			List<ISearchResult> actual = searchEngine.searchByWordWithRanking("ThE");
-			for (ISearchResult searchRes : actual) {
-				System.out.println(searchRes.toString());
-			}
+			//for (ISearchResult searchRes : actual) {
+				//System.out.println(searchRes.toString());
+			//}
 			Collections.sort(actual, new Comparator<ISearchResult>() {
 				@Override
 				public int compare(ISearchResult o1, ISearchResult o2) {
@@ -1085,9 +1085,9 @@ public class UnitTest {
 			searchEngine.indexDirectory("res");
 			List<ISearchResult> expected = Arrays.asList(new MySearchResult[]{new MySearchResult("7697605", 1), new MySearchResult("7697611", 10)});
 			List<ISearchResult> actual = searchEngine.searchByMultipleWordWithRanking("   tHe  is  aRE   		");
-			for (ISearchResult searchRes : actual) {
-				System.out.println(searchRes.toString());
-			}
+			//for (ISearchResult searchRes : actual) {
+				//System.out.println(searchRes.toString());
+		//}
 			Collections.sort(actual, new Comparator<ISearchResult>() {
 				@Override
 				public int compare(ISearchResult o1, ISearchResult o2) {
